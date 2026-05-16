@@ -1,0 +1,54 @@
+import React, { useRef } from 'react';
+import { Download } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const CTA = ({ globalVideoRef, isMuted }) => {
+  const sectionRef = useRef(null);
+  const videoRef = useRef(null);
+
+  useGSAP(() => {
+    if (globalVideoRef && globalVideoRef.current) {
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top bottom",
+        onEnter: () => {
+          gsap.to(globalVideoRef.current, { opacity: 0, duration: 1 });
+          if (videoRef.current) videoRef.current.play();
+        },
+        onLeaveBack: () => {
+          gsap.to(globalVideoRef.current, { opacity: 1, duration: 1 });
+        }
+      });
+    }
+  }, { scope: sectionRef });
+
+  return (
+    <section ref={sectionRef} className="bottom-cta-section">
+      <video
+        ref={videoRef}
+        className="cta-bg-video"
+        src="/cta_video.mp4"
+        autoPlay
+        loop
+        playsInline
+        muted={isMuted}
+      />
+      <div className="container cta-content">
+        <h2 className="cta-headline">You made it <br /> this far.</h2>
+        <p className="cta-subtext">
+          Your journey towards a calmer self starts here. Join thousands of users who have already found their peace.
+        </p>
+        <button className="btn-primary cta-btn">
+          <Download size={20} />
+          Download App
+        </button>
+      </div>
+    </section>
+  );
+};
+
+export default CTA;
