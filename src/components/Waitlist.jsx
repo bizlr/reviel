@@ -23,12 +23,26 @@ const Waitlist = () => {
         source: 'hero_waitlist'
       });
       
+      // Trigger Email via External Service
+      try {
+        await fetch("https://services.bizlr.net/email/reviel.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstname: formData.firstName,
+            lastname: formData.lastName,
+            email: formData.email
+          }),
+        });
+      } catch (emailError) {
+        console.error("Failed to trigger email service:", emailError);
+        // We still proceed as the Firestore write was successful
+      }
+      
       setStatus('success');
       setFormData({ firstName: '', lastName: '', email: '' });
-      
-      // NOTE: To send the branded welcome email, 
-      // you should install the "Trigger Email from Firestore" Firebase Extension
-      // and configure it to watch the "waitlist" collection.
     } catch (error) {
       console.error("Error adding to waitlist: ", error);
       setStatus('error');
