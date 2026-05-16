@@ -31,7 +31,7 @@ const CTA = ({ globalVideoRef, isMuted }) => {
       <video
         ref={videoRef}
         className="cta-bg-video"
-        src="/cta_video.mp4"
+        src="https://res.cloudinary.com/quinn-daisies-platform/video/upload/v1778958498/ARUKAH%20IMAGES/YTDown_YouTube_No-Copyright-Drone-Shots-Royalty-free-dr_Media_iUtnZpzkbG8_001_1080p_fjvmrl.mp4"
         autoPlay
         loop
         playsInline
