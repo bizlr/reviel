@@ -6,8 +6,8 @@ const FAQItem = ({ question, answer }) => {
 
   return (
     <div className="faq-item">
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
+      <button
+        onClick={() => setIsOpen(!isOpen)}
         className="faq-trigger"
       >
         <span>{question}</span>
@@ -30,31 +30,31 @@ const FAQ = () => {
   const faqData = [
     {
       question: "What is Reviel, really?",
-      answer: "Reviel is an intelligent companion designed to help you reconnect with yourself. It's not just another tool; it's a space for reflection, emotional regulation, and quiet support."
+      answer: "Reviel isn't here to replace your life. It's here to sit with you in it. A quiet place to pause, reflect, and feel heard, without pressure, without judgment, and when you're ready, Reviel gently helps you reconnect, not just with yourself, but with the people who matter in your life."
     },
     {
       question: "Is this just another AI app?",
-      answer: "While powered by advanced technology, Reviel is built with a 'human-first' philosophy. We focus on depth, nuance, and genuine emotional resonance rather than just productivity or information."
+      answer: "No. Most Al tries to keep you engaged, Reviel is built to help you step away, and if a real conversation, a friend, or someone you trust is what you need, Reviel will guide you back to that, because real connection isn't something we replace, it's something we protect."
     },
     {
       question: "Will this replace therapy or real support?",
-      answer: "Never. Reviel is a complementary presence. It's designed to bridge the gaps between sessions and help you find your way back to the people who matter most."
+      answer: "No, and it's not meant to. Reviel is a gentle presence, not a professional or a replacement for real help, but in the quiet moments, when you don't know what to say or who to reach, it helps you take that first step toward feeling steady again."
     },
     {
       question: "What happens to what I share?",
-      answer: "Your privacy is our foundation. Everything shared with Reviel is encrypted and belongs solely to you. We don't sell data; we build trust."
+      answer: "What you share stays yours. No selling, no hidden use, no exposure, just a private space where you can be honest, even on the days you don't have the words."
     },
     {
       question: "Is Reviel free to use?",
-      answer: "We offer a generous free experience to ensure everyone has access to support. A premium version with deeper features will be available for those who want to support our mission."
+      answer: "The core experience is free, always. We may offer a gentle premium tier later for deeper reflection tools, but the heart of Reviel will remain free for everyone."
     },
     {
       question: "Why does Reviel matter?",
-      answer: "In a world that demands more of us every day, we need spaces that ask for less. Reviel matters because your mental well-being isn't a luxury—it's a necessity."
+      answer: "Because people are carrying more than they show, because not every moment needs fixing, some just need space, and because sometimes you don't need advice, you just need to feel understood"
     },
     {
       question: "When can I experience it?",
-      answer: "We are currently in a limited beta to ensure the experience is perfect. Join the waitlist above to be among the first to receive an invitation."
+      answer: "Soon. We're taking time to build this carefully, because something that meets people in vulnerable moments has to be done right, and if this speaks to you, you'll be the first to know when it's ready"
     }
   ];
 
@@ -79,7 +79,7 @@ const FAQ = () => {
           {faqData.map((item, i) => (
             <FAQItem key={i} question={item.question} answer={item.answer} />
           ))}
-          
+
           <div className="faq-bottom-quote">
             Reviel won't replace the people in your life. <br />
             It helps you find your way back to them.

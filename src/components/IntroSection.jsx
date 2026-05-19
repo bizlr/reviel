@@ -2,10 +2,12 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { useLenis } from 'lenis/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const IntroSection = ({ globalVideoRef }) => {
+  const lenis = useLenis();
   const containerRef = useRef(null);
   const textRef = useRef(null);
   const bgRef = useRef(null);
@@ -183,7 +185,16 @@ const IntroSection = ({ globalVideoRef }) => {
         </div>
       </div>
 
-      <div ref={mouseRef} className="tap-to-continue">
+      <div 
+        ref={mouseRef} 
+        className="tap-to-continue"
+        onClick={() => {
+          if (lenis) {
+            lenis.scrollTo('#waitlist-section', { duration: 20 });
+          }
+        }}
+        style={{ cursor: 'pointer' }}
+      >
         <div className="mouse-icon"></div>
         <p>Scroll or Tap to Continue</p>
       </div>

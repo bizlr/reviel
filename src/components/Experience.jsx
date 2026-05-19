@@ -3,33 +3,33 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const experiences = [
   {
-    title: "Breathe",
-    description: "Slow things down. Let your mind settle, one moment at a time. It's about finding that rhythm that works for you.",
-    tags: ["Calm", "Stillness"],
+    title: "Notice",
+    description: "Recognize emotional patterns early before overwhelm begins to build quietly in the background.",
+    tags: ["Awareness", "Patterns"],
     image: "/exp1.jpeg"
   },
   {
-    title: "Connect",
-    description: "Build a deeper relationship with your inner self. Discover the quiet strength that comes from being present.",
-    tags: ["Self", "Presence"],
+    title: "Reset",
+    description: "Create space to slow down, regulate your thoughts, and regain emotional balance during difficult moments.",
+    tags: ["Regulation", "Balance"],
     image: "/exp2.jpeg"
   },
   {
     title: "Reflect",
-    description: "Look out at the world with fresh eyes. Sometimes a change in perspective is all you need to find clarity.",
-    tags: ["Perspective", "Clarity"],
+    description: "Step back from the noise and understand what your mind and emotions may be trying to tell you.",
+    tags: ["Clarity", "Perspective"],
     image: "/exp3.jpeg"
   },
   {
-    title: "Restore",
-    description: "Replenish your energy through mindful rest. Learn to listen to what your body and mind truly need.",
-    tags: ["Rest", "Energy"],
+    title: "Reconnect",
+    description: "Strengthen your connection to yourself and the people around you before stress creates emotional distance.",
+    tags: ["Connection", "Support"],
     image: "/exp4.jpeg"
   },
   {
-    title: "Savor",
-    description: "Find joy in the simple things. A warm cup, a quiet seat, and the beauty of just being here.",
-    tags: ["Joy", "Simple"],
+    title: "Recover",
+    description: "Restore your mental and emotional energy before exhaustion turns into burnout.",
+    tags: ["Recovery", "Energy"],
     image: "/exp5.jpeg"
   }
 ];
@@ -57,7 +57,7 @@ const Experience = () => {
               <span>EXPERIENCE WE OFFER</span>
               <div className="label-line"></div>
             </div>
-            <h2 className="experience-headline">A softer way <br /> to be with <br /> yourself.</h2>
+            <h2 className="experience-headline">Helping you <br /> reconnect before <br />burnout takes over.</h2>
             <p className="experience-description">
               {current.description}
             </p>
@@ -71,13 +71,13 @@ const Experience = () => {
               </span>
             </div>
           </div>
-          
+
           <div className="experience-visuals">
             {/* Back Card (Previews next slide) */}
             <div className="experience-card card-back" key={`back-${(currentIndex + 1) % experiences.length}`}>
               <img src={next.image} alt={next.title} />
             </div>
-            
+
             {/* Front Card (Current slide) */}
             <div className="experience-card card-front" key={`front-${currentIndex}`}>
               <img src={current.image} alt={current.title} />

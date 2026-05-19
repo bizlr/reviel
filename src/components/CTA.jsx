@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Download } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -42,9 +41,13 @@ const CTA = ({ globalVideoRef, isMuted }) => {
         <p className="cta-subtext">
           Your journey towards a calmer self starts here. Join thousands of users who have already found their peace.
         </p>
-        <button className="btn-primary cta-btn">
-          <Download size={20} />
-          Download App
+        <button 
+          className="btn-primary cta-btn"
+          onClick={() => {
+            document.getElementById('waitlist-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Join waitlist
         </button>
       </div>
     </section>

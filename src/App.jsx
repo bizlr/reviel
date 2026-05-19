@@ -1,4 +1,8 @@
 import React, { useRef } from 'react';
+import { ReactLenis } from 'lenis/react';
+import gsap from 'gsap';
+
+gsap.defaults({ force3D: true });
 import Hero from './components/Hero';
 import IntroSection from './components/IntroSection';
 import Experience from './components/Experience';
@@ -13,16 +17,18 @@ function App() {
   const [isMuted, setIsMuted] = React.useState(false);
 
   return (
-    <div className="app">
-      <VideoBackground ref={globalVideoRef} isMuted={isMuted} />
-      <IntroSection globalVideoRef={globalVideoRef} />
-      <Hero isMuted={isMuted} setIsMuted={setIsMuted} />
-      <Experience />
-      <Testimonials />
-      <FAQ />
-      <CTA globalVideoRef={globalVideoRef} isMuted={isMuted} />
-      <Footer />
-    </div>
+    <ReactLenis root>
+      <div className="app">
+        <VideoBackground ref={globalVideoRef} isMuted={isMuted} />
+        <IntroSection globalVideoRef={globalVideoRef} />
+        <Hero isMuted={isMuted} setIsMuted={setIsMuted} />
+        <Experience />
+        <Testimonials />
+        <FAQ />
+        <CTA globalVideoRef={globalVideoRef} isMuted={isMuted} />
+        <Footer />
+      </div>
+    </ReactLenis>
   );
 }
 

@@ -841,11 +841,36 @@ h1, h2, h3, .serif {
   }
 }
 
+.footer-desc {
+  opacity: 0.9;
+  max-width: 340px;
+  font-size: 1rem;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 40px;
     text-align: center;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-brand .logo img {
+    margin: 0 auto;
+  }
+
+  .footer-desc {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .footer-links-list a, .footer-social-list a {
@@ -854,10 +879,6 @@ h1, h2, h3, .serif {
 
   .footer-links-list a:hover, .footer-social-list a:hover {
     transform: translateY(-2px);
-  }
-
-  .footer-newsletter {
-    margin: 0 auto;
   }
 
   .main-footer-section {
@@ -1229,3 +1250,26 @@ h1, h2, h3, .serif {
   pointer-events: none;
   z-index: 0;
 }
+
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  /* Disable heavy glass blurs and fall back to solid/opaque colors */
+  .glass-card, .faq-item {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(10, 15, 30, 0.6) !important;
+  }
+  
+  /* Disable expensive text shadows */
+  .cinematic-step h2, .cinematic-step p, .mask-text {
+    text-shadow: none !important;
+  }
+  
+  /* Force hardware acceleration and pre-calculate animations on heavy layers */
+  .mask-text, .intro-bg, .global-video-bg, .cinematic-step {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+}
+

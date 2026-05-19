@@ -20,7 +20,7 @@ const Hero = ({ isMuted, setIsMuted }) => {
   }, []);
 
   return (
-    <section className="top-wrapper">
+    <section id="waitlist-section" className="top-wrapper">
       <header className={`main-header ${isSticky ? 'sticky' : ''}`}>
         <div className="logo">
           <img src="/logo_reviel.png" alt="Reviel Logo" />
