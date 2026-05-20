@@ -29,10 +29,10 @@ const Footer = () => {
           <div className="footer-links-col">
             <h3 className="footer-heading">Social</h3>
             <ul className="footer-links-list">
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Titktok</a></li>
-              <li><a href="#">Facebook</a></li>
+              <li><a href="https://instagram.com/reviel_daily" target="_blank" rel="noreferrer">Instagram</a></li>
+              <li><a href="https://twitter.com/reviel_daily" target="_blank" rel="noreferrer">Twitter</a></li>
+              <li><a href="https://tiktok.com/@reviel_daily" target="_blank" rel="noreferrer">Tiktok</a></li>
+              <li><a href="https://facebook.com/reviel_daily" target="_blank" rel="noreferrer">Facebook</a></li>
             </ul>
           </div>
         </div>

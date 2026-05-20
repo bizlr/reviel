@@ -31,7 +31,7 @@ const Testimonials = () => {
           {[...reviewsRow1, ...reviewsRow1].map((review, i) => (
             <div 
               key={i} 
-              className="testimonial-card" 
+              className={`testimonial-card ${i >= reviewsRow1.length ? 'mobile-only-card' : ''}`}
               style={{ backgroundColor: review.color }}
             >
               <p className="testimonial-text">
@@ -48,7 +48,7 @@ const Testimonials = () => {
           {[...reviewsRow2, ...reviewsRow2].map((review, i) => (
             <div 
               key={i} 
-              className="testimonial-card" 
+              className={`testimonial-card ${i >= reviewsRow2.length ? 'mobile-only-card' : ''}`}
               style={{ backgroundColor: review.color }}
             >
               <p className="testimonial-text">

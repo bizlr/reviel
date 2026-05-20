@@ -1,9 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import Waitlist from './Waitlist';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = ({ isMuted, setIsMuted }) => {
   const [isSticky, setIsSticky] = useState(false);
+  const waitlistContainerRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.from(waitlistContainerRef.current, {
+      scrollTrigger: {
+        trigger: waitlistContainerRef.current,
+        start: "top 50%",
+        toggleActions: "play none none reverse",
+      },
+      opacity: 0,
+      y: 0, // no vertical translation, just fade
+      duration: 2, // very smooth/slow
+      ease: "power2.out"
+    });
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,7 +56,7 @@ const Hero = ({ isMuted, setIsMuted }) => {
         </div>
       </header>
       
-      <div className="container" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="container" ref={waitlistContainerRef} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Waitlist />
       </div>
 

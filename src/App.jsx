@@ -14,18 +14,19 @@ import VideoBackground from './components/VideoBackground';
 
 function App() {
   const globalVideoRef = useRef(null);
+  const globalCTAVideoRef = useRef(null);
   const [isMuted, setIsMuted] = React.useState(false);
 
   return (
     <ReactLenis root>
       <div className="app">
         <VideoBackground ref={globalVideoRef} isMuted={isMuted} />
-        <IntroSection globalVideoRef={globalVideoRef} />
+        <IntroSection globalVideoRef={globalVideoRef} setIsMuted={setIsMuted} globalCTAVideoRef={globalCTAVideoRef} />
         <Hero isMuted={isMuted} setIsMuted={setIsMuted} />
         <Experience />
         <Testimonials />
         <FAQ />
-        <CTA globalVideoRef={globalVideoRef} isMuted={isMuted} />
+        <CTA globalVideoRef={globalVideoRef} isMuted={isMuted} ctaVideoRef={globalCTAVideoRef} />
         <Footer />
       </div>
     </ReactLenis>

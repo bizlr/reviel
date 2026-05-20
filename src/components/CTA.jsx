@@ -5,9 +5,8 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CTA = ({ globalVideoRef, isMuted }) => {
+const CTA = ({ globalVideoRef, isMuted, ctaVideoRef }) => {
   const sectionRef = useRef(null);
-  const videoRef = useRef(null);
 
   useGSAP(() => {
     if (globalVideoRef && globalVideoRef.current) {
@@ -16,7 +15,7 @@ const CTA = ({ globalVideoRef, isMuted }) => {
         start: "top bottom",
         onEnter: () => {
           gsap.to(globalVideoRef.current, { opacity: 0, duration: 1 });
-          if (videoRef.current) videoRef.current.play();
+          if (ctaVideoRef && ctaVideoRef.current) ctaVideoRef.current.play();
         },
         onLeaveBack: () => {
           gsap.to(globalVideoRef.current, { opacity: 1, duration: 1 });
@@ -28,7 +27,7 @@ const CTA = ({ globalVideoRef, isMuted }) => {
   return (
     <section ref={sectionRef} className="bottom-cta-section">
       <video
-        ref={videoRef}
+        ref={ctaVideoRef}
         className="cta-bg-video"
         src="https://res.cloudinary.com/quinn-daisies-platform/video/upload/v1778958498/ARUKAH%20IMAGES/YTDown_YouTube_No-Copyright-Drone-Shots-Royalty-free-dr_Media_iUtnZpzkbG8_001_1080p_fjvmrl.mp4"
         autoPlay

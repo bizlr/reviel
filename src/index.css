@@ -1041,16 +1041,23 @@ h1, h2, h3, .serif {
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-/* Marquee */
+/* Testimonials Grid / Marquee */
 .marquee-container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
-  animation: marquee-left 60s linear infinite;
-  width: max-content;
+  width: 100%;
 }
 
 .marquee-right {
-  animation: marquee-right 60s linear infinite;
+  /* No special animation on desktop */
+}
+
+@media (min-width: 769px) {
+  .mobile-only-card {
+    display: none !important;
+  }
 }
 
 @keyframes marquee-left {
@@ -1065,8 +1072,13 @@ h1, h2, h3, .serif {
 
 @media (max-width: 768px) {
   .marquee-container {
-    animation-duration: 40s;
+    flex-wrap: nowrap;
+    width: max-content;
+    animation: marquee-left 40s linear infinite;
     gap: 16px;
+  }
+  .marquee-right {
+    animation: marquee-right 40s linear infinite;
   }
 }
 
@@ -1074,6 +1086,9 @@ h1, h2, h3, .serif {
   .marquee-container {
     animation-duration: 25s;
     gap: 12px;
+  }
+  .marquee-right {
+    animation-duration: 25s;
   }
 }
 
@@ -1253,13 +1268,7 @@ h1, h2, h3, .serif {
 
 /* Mobile Performance Optimizations */
 @media (max-width: 768px) {
-  /* Disable heavy glass blurs and fall back to solid/opaque colors */
-  .glass-card, .faq-item {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(10, 15, 30, 0.6) !important;
-  }
-  
+
   /* Disable expensive text shadows */
   .cinematic-step h2, .cinematic-step p, .mask-text {
     text-shadow: none !important;

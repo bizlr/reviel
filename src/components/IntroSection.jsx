@@ -6,7 +6,7 @@ import { useLenis } from 'lenis/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const IntroSection = ({ globalVideoRef }) => {
+const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
   const lenis = useLenis();
   const containerRef = useRef(null);
   const textRef = useRef(null);
@@ -133,6 +133,86 @@ const IntroSection = ({ globalVideoRef }) => {
 
   }, { scope: containerRef });
 
+  const handleGuidedScroll = () => {
+    if (setIsMuted) {
+      setIsMuted(false);
+    }
+    if (globalCTAVideoRef && globalCTAVideoRef.current) {
+      globalCTAVideoRef.current.play();
+    }
+    
+    if (lenis) {
+      lenis.stop(); // Disable user scrolling during the guided sequence
+    }
+
+    // Hide the mouse icon since we are starting the sequence
+    gsap.to(mouseRef.current, { opacity: 0, duration: 0.5 });
+
+    const totalScroll = window.innerHeight * 10;
+    const scrollObj = { y: window.scrollY };
+    
+    const animateScroll = () => {
+      window.scrollTo(0, scrollObj.y);
+      if (lenis) {
+        lenis.scrollTo(scrollObj.y, { immediate: true });
+      }
+    };
+
+    const tlScroll = gsap.timeline({
+      onComplete: () => {
+        if (lenis) lenis.start();
+        const waitlistElem = document.getElementById('waitlist-section');
+        if (waitlistElem && lenis) {
+          lenis.scrollTo(waitlistElem, { immediate: true });
+        }
+      }
+    });
+
+    // Step 1: ~30%
+    tlScroll.to(scrollObj, {
+      y: totalScroll * 0.30,
+      duration: 4.0,
+      ease: "power2.inOut",
+      onUpdate: animateScroll
+    })
+    .to({}, { duration: 2.0 })
+
+    // Step 2: ~50%
+    .to(scrollObj, {
+      y: totalScroll * 0.50,
+      duration: 4.0,
+      ease: "power2.inOut",
+      onUpdate: animateScroll
+    })
+    .to({}, { duration: 2.0 })
+
+    // Step 3: ~65%
+    .to(scrollObj, {
+      y: totalScroll * 0.65,
+      duration: 4.0,
+      ease: "power2.inOut",
+      onUpdate: animateScroll
+    })
+    .to({}, { duration: 2.0 })
+
+    // Step 4: ~80%
+    .to(scrollObj, {
+      y: totalScroll * 0.80,
+      duration: 4.0,
+      ease: "power2.inOut",
+      onUpdate: animateScroll
+    })
+    .to({}, { duration: 2.0 })
+
+    // Scroll to Waitlist (100%)
+    .to(scrollObj, {
+      y: totalScroll,
+      duration: 6.0,
+      ease: "power2.inOut",
+      onUpdate: animateScroll
+    });
+  };
+
   return (
     <div ref={containerRef} className="intro-container">
       {/* Background Layers */}
@@ -188,11 +268,7 @@ const IntroSection = ({ globalVideoRef }) => {
       <div 
         ref={mouseRef} 
         className="tap-to-continue"
-        onClick={() => {
-          if (lenis) {
-            lenis.scrollTo('#waitlist-section', { duration: 20 });
-          }
-        }}
+        onClick={handleGuidedScroll}
         style={{ cursor: 'pointer' }}
       >
         <div className="mouse-icon"></div>
