@@ -15,7 +15,7 @@ import VideoBackground from './components/VideoBackground';
 function App() {
   const globalVideoRef = useRef(null);
   const globalCTAVideoRef = useRef(null);
-  const [isMuted, setIsMuted] = React.useState(false);
+  const [isMuted, setIsMuted] = React.useState(true);
 
   return (
     <ReactLenis root>

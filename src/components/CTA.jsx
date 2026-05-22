@@ -15,7 +15,9 @@ const CTA = ({ globalVideoRef, isMuted, ctaVideoRef }) => {
         start: "top bottom",
         onEnter: () => {
           gsap.to(globalVideoRef.current, { opacity: 0, duration: 1 });
-          if (ctaVideoRef && ctaVideoRef.current) ctaVideoRef.current.play();
+          if (ctaVideoRef && ctaVideoRef.current) {
+            ctaVideoRef.current.play().catch(e => console.log("ScrollTrigger CTA play call catch:", e));
+          }
         },
         onLeaveBack: () => {
           gsap.to(globalVideoRef.current, { opacity: 1, duration: 1 });
@@ -23,6 +25,60 @@ const CTA = ({ globalVideoRef, isMuted, ctaVideoRef }) => {
       });
     }
   }, { scope: sectionRef });
+
+  React.useEffect(() => {
+    const video = ctaVideoRef && ctaVideoRef.current;
+    if (!video) return;
+
+    let unmuteListener = null;
+
+    const playVideo = async () => {
+      video.muted = isMuted;
+      try {
+        await video.play();
+      } catch (error) {
+        console.log("CTA video autoplay with sound was prevented, falling back to muted.", error);
+        video.muted = true;
+        try {
+          await video.play();
+        } catch (mutedError) {
+          console.log("CTA video muted playback failed too.", mutedError);
+        }
+
+        // If user expects sound but browser blocked it, unmute on next gesture
+        if (!isMuted) {
+          unmuteListener = async () => {
+            video.muted = false;
+            try {
+              await video.play();
+              console.log("Successfully unmuted CTA video on interaction gesture.");
+            } catch (gestureErr) {
+              console.log("Failed to unmute CTA video on gesture, reverting to muted.", gestureErr);
+              video.muted = true;
+            }
+            cleanupListeners();
+          };
+
+          window.addEventListener('click', unmuteListener);
+          window.addEventListener('touchstart', unmuteListener);
+        }
+      }
+    };
+
+    const cleanupListeners = () => {
+      if (unmuteListener) {
+        window.removeEventListener('click', unmuteListener);
+        window.removeEventListener('touchstart', unmuteListener);
+        unmuteListener = null;
+      }
+    };
+
+    playVideo();
+
+    return () => {
+      cleanupListeners();
+    };
+  }, [isMuted, ctaVideoRef]);
 
   return (
     <section ref={sectionRef} className="bottom-cta-section">

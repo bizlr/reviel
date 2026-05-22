@@ -27,13 +27,57 @@ const VideoBackground = forwardRef(({ isMuted }, ref) => {
   }, { scope: contentRef });
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = isMuted;
-      // Ensure it's playing
-      videoRef.current.play().catch(error => {
-        console.log("Autoplay with sound was prevented. Browser policy requires user interaction.", error);
-      });
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    let unmuteListener = null;
+
+    const playVideo = async () => {
+      video.muted = isMuted;
+      try {
+        await video.play();
+      } catch (error) {
+        console.log("Global bg video autoplay with sound was prevented, falling back to muted.", error);
+        video.muted = true;
+        try {
+          await video.play();
+        } catch (mutedError) {
+          console.log("Global bg video muted playback failed too.", mutedError);
+        }
+
+        // If user expects sound but browser blocked it, unmute on next gesture
+        if (!isMuted) {
+          unmuteListener = async () => {
+            video.muted = false;
+            try {
+              await video.play();
+              console.log("Successfully unmuted global bg video on interaction gesture.");
+            } catch (gestureErr) {
+              console.log("Failed to unmute global bg video on gesture, reverting to muted.", gestureErr);
+              video.muted = true;
+            }
+            cleanupListeners();
+          };
+
+          window.addEventListener('click', unmuteListener);
+          window.addEventListener('touchstart', unmuteListener);
+        }
+      }
+    };
+
+    const cleanupListeners = () => {
+      if (unmuteListener) {
+        window.removeEventListener('click', unmuteListener);
+        window.removeEventListener('touchstart', unmuteListener);
+        unmuteListener = null;
+      }
+    };
+
+    playVideo();
+
+    return () => {
+      cleanupListeners();
+    };
   }, [isMuted]);
 
   return (
@@ -57,7 +101,6 @@ const VideoBackground = forwardRef(({ isMuted }, ref) => {
         className="video-content-wrapper"
         style={{
           position: 'absolute',
-          top: 0,
           left: 0,
           width: '100%',
           height: '120%', // Provide bleed for movement

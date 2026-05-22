@@ -27,8 +27,8 @@ const Hero = ({ isMuted, setIsMuted }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show sticky header after cinematic intro (approx 1000vh)
-      if (window.scrollY > window.innerHeight * 9.5) {
+      // Show sticky header after cinematic intro (approx 100vh)
+      if (window.scrollY > window.innerHeight * 0.9) {
         setIsSticky(true);
       } else {
         setIsSticky(false);
