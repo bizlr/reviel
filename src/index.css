@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Outfit:wght@100..900&family=Canela:wght@400;500;600;700&display=swap');
 
 :root {
   /* Colors */
@@ -9,6 +9,7 @@
   /* Typography */
   --font-serif: 'EB Garamond', serif;
   --font-sans: 'Outfit', sans-serif;
+  --font-canela: 'Canela', serif;
 
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.08);
@@ -960,7 +961,7 @@ h1, h2, h3, .serif {
   background: rgba(10, 15, 30, 0.5); /* Lighter and transparent */
   backdrop-filter: blur(25px); /* Re-enabled blur */
   -webkit-backdrop-filter: blur(25px);
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #ddd;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -1055,11 +1056,14 @@ h1, h2, h3, .serif {
 
 /* Waitlist Typography */
 .waitlist-title {
-  font-size: 4rem;
+  font-size: 2.4rem;
   margin-bottom: 12px;
   line-height: 1.1;
-  font-family: var(--font-serif);
+  font-family: var(--font-roboto);
+  font-weight: 700;
   text-align: center; /* Centralized */
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .waitlist-desc {
@@ -1216,7 +1220,7 @@ h1, h2, h3, .serif {
   }
 
   .waitlist-title {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
   }
 
   .experience-section, .faq-section, .bottom-cta-section {
@@ -1262,7 +1266,7 @@ h1, h2, h3, .serif {
   }
 
   .waitlist-title {
-    font-size: 2rem;
+    font-size: 1.4rem;
   }
 
   .btn-primary {

@@ -174,7 +174,7 @@ const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
   useGSAP(() => {
     if (currentStep >= 1 && currentStep <= 4) {
       gsap.killTweensOf(slideRef.current);
-      
+
       gsap.fromTo(slideRef.current,
         {
           y: 120,
@@ -261,24 +261,24 @@ const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
   return (
     <div ref={containerRef} className="intro-container">
       {/* Background Layer */}
-      <div 
-        ref={bgRef} 
+      <div
+        ref={bgRef}
         className="intro-bg"
         style={{ backgroundImage: "url('/reviel_nature_bg.jpg')" }}
       />
-      
+
       {/* Pre-Intro Screen Content */}
-      <div 
-        ref={preIntroRef} 
-        className="pre-intro-content" 
+      <div
+        ref={preIntroRef}
+        className="pre-intro-content"
         style={{ display: 'none', opacity: 0 }}
       >
         <h1 className="pre-intro-title">Come Back To Yourself.</h1>
         <p className="pre-intro-text">
-          Reviel is a calm, intelligent companion that helps you reconnect, regulate, and feel supported every day.
+          Reviel helps you understand burnout, stress, and emotional overload before they become overwhelming
         </p>
       </div>
-      
+
       {/* SVG Mask Overlay */}
       {showMask && (
         <div ref={overlayRef} className="intro-overlay">
@@ -286,11 +286,11 @@ const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
             <defs>
               <mask id="textMask">
                 <rect width="100%" height="100%" fill="white" />
-                <text 
+                <text
                   ref={textRef}
-                  x="1000" 
-                  y="500" 
-                  textAnchor="middle" 
+                  x="1000"
+                  y="500"
+                  textAnchor="middle"
                   dominantBaseline="middle"
                   className="mask-text"
                   style={{ fontWeight: 700 }}
@@ -306,8 +306,8 @@ const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
 
       {/* Tap/Scroll to Continue Prompt (Only in step 0, before zoom) */}
       {!hasZoomed && (
-        <div 
-          ref={mouseRef} 
+        <div
+          ref={mouseRef}
           className="tap-to-continue"
           style={{ cursor: 'pointer' }}
         >
@@ -329,17 +329,11 @@ const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
             <div ref={slideRef} className="cinematic-step active-step" style={{ opacity: 0, position: 'relative' }}>
               <h2>{stepsData[currentStep - 1].text}</h2>
               <div className="intro-btn-container">
-                <button 
-                  className="intro-btn-primary" 
+                <button
+                  className="intro-btn-primary"
                   onClick={stepsData[currentStep - 1].onPrimary}
                 >
                   {stepsData[currentStep - 1].primaryText}
-                </button>
-                <button 
-                  className="intro-btn-secondary" 
-                  onClick={stepsData[currentStep - 1].onSecondary}
-                >
-                  {stepsData[currentStep - 1].secondaryText}
                 </button>
               </div>
             </div>

@@ -2,17 +2,17 @@ import React from 'react';
 
 const Testimonials = () => {
   const reviewsRow1 = [
-    { text: "Most apps feel noisy. Reviel feels like silence in the best way.", author: "Michael", color: "rgba(224, 242, 254, 0.85)" },
-    { text: "I didn't realize how much I needed a calm space until I found this.", author: "Zara", color: "rgba(239, 246, 255, 0.85)" },
-    { text: "It feels strangely human... like it actually understands when I'm overwhelmed.", author: "Ethan", color: "rgba(255, 228, 230, 0.85)" },
-    { text: "Reviel gives me the feeling of slowing down without feeling guilty for it.", author: "Sofia", color: "rgba(220, 252, 231, 0.85)" },
+    { text: "I tested it during a really chaotic week and it somehow made me notice how disconnected I’d been feeling.", author: "Michael", color: "rgba(224, 242, 254, 0.85)" },
+    { text: "There was one day it noticed my energy shift before I consciously did. That surprised me.", author: "Zara", color: "rgba(239, 246, 255, 0.85)" },
+    { text: "It made me realize how often I say I’m ‘just tired’ when I’m actually overwhelmed.", author: "Ethan", color: "rgba(255, 228, 230, 0.85)" },
+    { text: "The app felt most useful on the days I didn’t know how to explain what I was feeling.", author: "Sofia", color: "rgba(220, 252, 231, 0.85)" },
   ];
 
   const reviewsRow2 = [
-    { text: "The voices inside feel like they're closing in on you.", author: "Elena", color: "rgba(220, 252, 231, 0.85)" },
-    { text: "I honestly didn't think an app could feel this gentle", author: "Noah", color: "rgba(219, 234, 254, 0.85)" },
-    { text: "Reviel reminds me that I don't always have to rush.", author: "Priya", color: "rgba(238, 242, 255, 0.85)" },
-    { text: "It feels safe here. That's the best way I can explain it.", author: "Marcus", color: "rgba(255, 228, 230, 0.85)" },
+    { text: "What stood out to me wasn’t the design or features,  it was how specific some of the reflections felt to my actual week.", author: "Elena", color: "rgba(220, 252, 231, 0.85)" },
+    { text: "I opened Reviel at 2am after doomscrolling for almost an hour. The check-in made me realize I hadn’t actually paused all day.", author: "Noah", color: "rgba(219, 234, 254, 0.85)" },
+    { text: "The burnout insights made me realize I’ve been running on autopilot for weeks without noticing.", author: "Priya", color: "rgba(238, 242, 255, 0.85)" },
+    { text: "The experiences feel less forced and more like someone asking the right question at the right time.", author: "Marcus", color: "rgba(255, 228, 230, 0.85)" },
   ];
 
   return (
@@ -29,8 +29,8 @@ const Testimonials = () => {
       <div className="marquee-wrapper">
         <div className="marquee-container marquee-right">
           {[...reviewsRow1, ...reviewsRow1].map((review, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className={`testimonial-card ${i >= reviewsRow1.length ? 'mobile-only-card' : ''}`}
               style={{ backgroundColor: review.color }}
             >
@@ -42,12 +42,12 @@ const Testimonials = () => {
           ))}
         </div>
       </div>
-      
+
       <div className="marquee-wrapper" style={{ marginTop: '32px' }}>
         <div className="marquee-container">
           {[...reviewsRow2, ...reviewsRow2].map((review, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className={`testimonial-card ${i >= reviewsRow2.length ? 'mobile-only-card' : ''}`}
               style={{ backgroundColor: review.color }}
             >
