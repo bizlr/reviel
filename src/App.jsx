@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { ReactLenis } from 'lenis/react';
 import gsap from 'gsap';
 
@@ -15,14 +15,20 @@ import VideoBackground from './components/VideoBackground';
 function App() {
   const globalVideoRef = useRef(null);
   const globalCTAVideoRef = useRef(null);
-  const [isMuted, setIsMuted] = React.useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [introFinished, setIntroFinished] = useState(false);
 
   return (
     <ReactLenis root>
       <div className="app">
         <VideoBackground ref={globalVideoRef} isMuted={isMuted} />
-        <IntroSection globalVideoRef={globalVideoRef} setIsMuted={setIsMuted} globalCTAVideoRef={globalCTAVideoRef} />
-        <Hero isMuted={isMuted} setIsMuted={setIsMuted} />
+        <IntroSection
+          globalVideoRef={globalVideoRef}
+          setIsMuted={setIsMuted}
+          globalCTAVideoRef={globalCTAVideoRef}
+          onFinish={() => setIntroFinished(true)}
+        />
+        <Hero isMuted={isMuted} setIsMuted={setIsMuted} showHeader={introFinished} />
         <Experience />
         <Testimonials />
         <FAQ />

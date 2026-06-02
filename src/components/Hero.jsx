@@ -7,57 +7,50 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Hero = ({ isMuted, setIsMuted }) => {
-  const [isSticky, setIsSticky] = useState(false);
-  const waitlistContainerRef = useRef(null);
+// Added showHeader prop to control visibility of the header until the waitlist appears
 
-  useGSAP(() => {
-    gsap.from(waitlistContainerRef.current, {
-      scrollTrigger: {
-        trigger: waitlistContainerRef.current,
-        start: "top 50%",
-        toggleActions: "play none none reverse",
-      },
-      opacity: 0,
-      y: 0, // no vertical translation, just fade
-      duration: 2, // very smooth/slow
-      ease: "power2.out"
-    });
-  });
+  function Hero({ showHeader, isMuted, setIsMuted }) {
+    const [isSticky, setIsSticky] = useState(false);
+    const waitlistContainerRef = useRef(null);
 
+
+  // Update sticky state based on scroll position
   useEffect(() => {
-    const handleScroll = () => {
-      // Show sticky header after cinematic intro (approx 100vh)
-      if (window.scrollY > window.innerHeight * 0.9) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
+    const onScroll = () => {
+      setIsSticky(window.scrollY > 0);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Removed GSAP animation and ScrollTrigger to ensure the waitlist form appears instantly without relying on scroll position.
+  // The form is now rendered directly and visible as soon as the component mounts.
+
+
+
   return (
-    <section id="waitlist-section" className="top-wrapper">
-      <header className={`main-header ${isSticky ? 'sticky' : ''}`}>
-        <div className="logo">
-          <img src="/logo_reviel.png" alt="Reviel Logo" />
-        </div>
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          <button 
-            className="header-icon-btn"
-            onClick={() => setIsMuted(!isMuted)}
-            title={isMuted ? "Unmute" : "Mute"}
-          >
-            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-          </button>
-        </div>
-      </header>
+    <section id="waitlist-section" className="top-wrapper" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      {showHeader && (
+        <header className={`main-header ${isSticky ? 'sticky' : ''}`}>
+          <div className="logo">
+            <img src="/logo_reviel.png" alt="Reviel Logo" />
+          </div>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <button
+              className="header-icon-btn"
+              onClick={() => setIsMuted(!isMuted)}
+              title={isMuted ? "Unmute" : "Mute"}
+            >
+              {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+            </button>
+          </div>
+        </header>
+      )}
       
-      <div className="container" ref={waitlistContainerRef} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Waitlist />
+      <div className="container" ref={waitlistContainerRef} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <div style={{ maxWidth: '600px', width: '100%' }}>
+          <Waitlist />
+        </div>
       </div>
 
       <div className="scroll-indicator">
@@ -66,6 +59,6 @@ const Hero = ({ isMuted, setIsMuted }) => {
       </div>
     </section>
   );
-};
+}
 
 export default Hero;

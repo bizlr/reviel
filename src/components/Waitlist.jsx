@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { collection, query, where, getDocs, limit, addDoc, serverTimestamp } from 'firebase/firestore';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import SuccessModal from './SuccessModal';
 
 const Waitlist = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +11,8 @@ const Waitlist = () => {
     email: ''
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, exists, error
+  const [referralCode, setReferralCode] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,17 +20,55 @@ const Waitlist = () => {
 
     setStatus('loading');
     try {
-      // Directly send email without Firestore write
       const emailClean = formData.email.trim().toLowerCase();
       const nameParts = formData.name.trim().split(/\s+/);
       const firstname = nameParts[0] || '';
       const lastname = nameParts.slice(1).join(' ') || '';
+
+      // Check for duplicate email in Firestore "waitlist" collection
+      const q = query(collection(db, 'waitlist'), where('email', '==', emailClean), limit(1));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        setStatus('exists');
+        return;
+      }
+
+      // Generate unique referral code (6 alphanumeric characters)
+      const generateCode = async () => {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = '';
+        for (let i = 0; i < 6; i++) {
+          code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        // Check for collisions in Firestore
+        const q = query(collection(db, 'waitlist'), where('referralCode', '==', code), limit(1));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          // Collision, retry recursively (max attempts limited by stack depth)
+          return generateCode();
+        }
+        return code;
+      };
+      const code = await generateCode();
+      setReferralCode(code);
+
+      // Add new entry to Firestore with referral code
+      await addDoc(collection(db, 'waitlist'), {
+        name: formData.name,
+        email: emailClean,
+        referralCode: code,
+        createdAt: serverTimestamp(),
+      });
+
+      // Send confirmation email
       await fetch("https://services.bizlr.net/email/reviel.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firstname, lastname, email: emailClean })
       });
+
       setStatus('success');
+      setShowModal(true);
       setFormData({ name: '', email: '' });
     } catch (error) {
       console.error("Error submitting waitlist: ", error);
@@ -33,19 +76,29 @@ const Waitlist = () => {
     }
   };
 
-  return (
-    <div className="glass-card" style={{ textAlign: 'center' }}>
-      <h2 className="waitlist-title">COME BACK TO YOURSELF.</h2>
-      <p className="waitlist-desc" style={{ margin: '0 auto 32px' }}>
-        Reviel is arriving soon. Be part of the growing community choosing a calmer way to navigate life.
-      </p>
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setStatus('idle');
+  };
 
-      {status === 'success' ? (
-        <div className="success-message" style={{ padding: '40px 0' }}>
-          <h3 style={{ fontSize: '1.5rem', marginBottom: '10px' }}>You're on the list!</h3>
-          <p style={{ opacity: 0.8 }}>Check your inbox for a welcome from Reviel.</p>
-        </div>
-      ) : (
+  useGSAP(() => {
+    // Fade in the form glass-card on mount
+    gsap.from('.glass-card', {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      ease: 'power2.out',
+    });
+  });
+
+  return (
+    <>
+      <div className="glass-card">
+        <h2 className="waitlist-title">COME BACK TO YOURSELF.</h2>
+        <p className="waitlist-desc" style={{ margin: '0 auto 32px' }}>
+          Reviel is arriving soon. Be part of the growing community choosing a calmer way to navigate life.
+        </p>
+
         <form onSubmit={handleSubmit}>
           <div className="input-group" style={{ marginBottom: '20px' }}>
             <input 
@@ -86,8 +139,11 @@ const Waitlist = () => {
             </p>
           )}
         </form>
-      )}
-    </div>
+      </div>
+
+      {/* Success Modal */}
+      {showModal && <SuccessModal referralCode={referralCode} onClose={handleCloseModal} />}
+    </>
   );
 };
 

@@ -1,0 +1,10 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /waitlist/{entry} {
+      allow create: if true; // Allows anyone to submit to the waitlist
+      allow read, update, delete: if false; // Keeps the data private and secure
+    }
+  }
+}

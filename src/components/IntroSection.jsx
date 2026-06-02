@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useLenis } from 'lenis/react';
 
-const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
+const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef, onFinish }) => {
   const lenis = useLenis();
   const containerRef = useRef(null);
   const textRef = useRef(null);
@@ -203,16 +203,25 @@ const IntroSection = ({ globalVideoRef, setIsMuted, globalCTAVideoRef }) => {
   };
 
   const handleSkipOrFinish = () => {
+    // Mark intro as finished and trigger any parent callback
     setIsIntroFinished(true);
+    if (onFinish) onFinish();
+
+    // Scroll smoothly to the waitlist (form) section using native smooth scrolling.
+    const waitlistSection = document.getElementById('waitlist-section');
+    if (waitlistSection) {
+      // Adjust for fixed header height (approx 80px) to avoid overlay.
+      const headerOffset = 80;
+      const elementPosition = waitlistSection.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+
+    // Ensure Lenis scrolling is re-enabled after the smooth scroll completes.
+    // Lenis may be stopped during intro; start it after a short delay.
     if (lenis) {
       lenis.start();
-      const waitlistSection = document.getElementById('waitlist-section');
-      if (waitlistSection) {
-        lenis.scrollTo(waitlistSection, {
-          duration: 1.5,
-          ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        });
-      }
     }
   };
 
