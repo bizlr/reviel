@@ -116,8 +116,12 @@ const Waitlist = () => {
         createdAt: serverTimestamp(),
       });
 
+      const apiOrigin = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:5000'
+        : window.location.origin;
+
       // Send confirmation email
-      await fetch('http://localhost:5000/api/send-waitlist-email', {
+      await fetch(`${apiOrigin}/api/send-waitlist-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ firstname, email: emailClean, referralCode: code }),
