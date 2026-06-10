@@ -1,0 +1,8 @@
+{
+  "name": "reviel-api",
+  "version": "1.0.0",
+  "description": "Azure Functions API for Reviel",
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
