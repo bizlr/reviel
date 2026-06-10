@@ -3,7 +3,7 @@ import { Camera, Send, Globe } from 'lucide-react';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-const Footer = () => {
+const Footer = ({ onOpenPrivacy, onOpenTerms }) => {
   return (
     <footer className="main-footer-section">
       <div className="container">
@@ -20,8 +20,8 @@ const Footer = () => {
           <div className="footer-links-col">
             <h3 className="footer-heading">Legal</h3>
             <ul className="footer-links-list">
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); onOpenPrivacy && onOpenPrivacy(); }}>Privacy Policy</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); onOpenTerms && onOpenTerms(); }}>Terms of Use</a></li>
               <li><a href="#">Cookies</a></li>
             </ul>
           </div>

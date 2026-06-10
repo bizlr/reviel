@@ -53,10 +53,7 @@ gsap.registerPlugin(ScrollTrigger);
         </div>
       </div>
 
-      <div className="scroll-indicator">
-        <div className="mouse-icon"></div>
-        <p>Scroll down to learn more</p>
-      </div>
+      
     </section>
   );
 }

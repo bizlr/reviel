@@ -117,10 +117,10 @@ const Waitlist = () => {
       });
 
       // Send confirmation email
-      await fetch('https://services.bizlr.net/email/reviel.php', {
+      await fetch('http://localhost:5000/api/send-waitlist-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstname, lastname, email: emailClean }),
+        body: JSON.stringify({ firstname, email: emailClean, referralCode: code }),
       });
 
       setStatus('success');
@@ -146,7 +146,7 @@ const Waitlist = () => {
       <div className="glass-card">
         <h2 className="waitlist-title">COME BACK TO YOURSELF.</h2>
         <p className="waitlist-desc" style={{ margin: '0 auto 32px' }}>
-          Reviel is arriving soon. Be part of the growing community choosing a calmer way to navigate life.
+          Reviel is arriving soon. Be part of the growing community choosing a way where clarity returns.
         </p>
         <form onSubmit={handleSubmit}>
 

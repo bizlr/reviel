@@ -119,7 +119,7 @@ const VideoBackground = forwardRef(({ isMuted }, ref) => {
             objectFit: 'cover'
           }}
         >
-          <source src="https://res.cloudinary.com/quinn-daisies-platform/video/upload/v1778958476/ARUKAH%20IMAGES/openart-8b4718b519351299ba9689274df6eb3a-2c484539-7418-45e1-bc92-7ac622986182_1778162984197_bf1fcc1e_1_nxnito.mp4" type="video/mp4" />
+          <source src="https://revielappstorage.blob.core.windows.net/revielappcontainer/openart-8b4718b519351299ba9689274df6eb3a-2c484539-7418-45e1-bc92-7ac622986182_1778162984197_bf1fcc1e%20(1).mp4" type="video/mp4" />
         </video>
         {/* Subtle overlay for better text contrast */}
         <div style={{

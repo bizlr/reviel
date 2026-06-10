@@ -85,7 +85,7 @@ const CTA = ({ globalVideoRef, isMuted, ctaVideoRef }) => {
       <video
         ref={ctaVideoRef}
         className="cta-bg-video"
-        src="https://res.cloudinary.com/quinn-daisies-platform/video/upload/v1778958498/ARUKAH%20IMAGES/YTDown_YouTube_No-Copyright-Drone-Shots-Royalty-free-dr_Media_iUtnZpzkbG8_001_1080p_fjvmrl.mp4"
+        src="https://revielappstorage.blob.core.windows.net/revielappcontainer/YTDown_YouTube_No-Copyright-Drone-Shots-Royalty-free-dr_Media_iUtnZpzkbG8_001_1080p%20(1).mp4"
         autoPlay
         loop
         playsInline

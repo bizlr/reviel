@@ -8,7 +8,7 @@ const SuccessModal = ({ onClose, referralCode }) => {
 
   const baseUrl = 'https://launch.reviel.app';
   const shareUrl = referralCode ? `${baseUrl}/${referralCode}` : baseUrl;
-  const shareText = 'I just joined the Reviel waitlist — a calmer way to navigate life. Join me.';
+  const shareText = 'I just joined the Reviel waitlist — where clarity returns. Join me.';
 
   // Cleaned duplicate declarations;
 
