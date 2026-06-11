@@ -22,7 +22,6 @@ const Footer = ({ onOpenPrivacy, onOpenTerms }) => {
             <ul className="footer-links-list">
               <li><a href="#" onClick={(e) => { e.preventDefault(); onOpenPrivacy && onOpenPrivacy(); }}>Privacy Policy</a></li>
               <li><a href="#" onClick={(e) => { e.preventDefault(); onOpenTerms && onOpenTerms(); }}>Terms of Use</a></li>
-              <li><a href="#">Cookies</a></li>
             </ul>
           </div>
 
